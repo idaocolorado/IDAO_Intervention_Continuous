@@ -49,5 +49,25 @@ legend(min(activity$Date), max(activity$Steps), #Location
 ) 
 
 
+##*******************************************************************************************
+#ANALYTICAL APPROACHES: Intervention analysis on continuous data
+
+# 1) Basic: Compare average in outcome before and after intervention at time T
+#  - In this example, intervention at median date 4/16/2016
+
+# Create indicator variable for 'intervention'
+activity$intervention = 0
+activity$intervention <- replace(activity$intervention, activity$Date > "2016-04-16", 1)
+
+# Run ttest on steps comparing before and after intervention
+ttest <- t.test(subset(activity$Steps, activity$intervention == 0), subset(activity$Steps, activity$intervention == 1))
+ttest
+
+# Run two-sample Wilcoxon test
+wilcoxon <- wilcox.test(subset(activity$Steps, activity$intervention == 0), subset(activity$Steps, activity$intervention == 1))
+wilcoxon
+
+
+
 
 
